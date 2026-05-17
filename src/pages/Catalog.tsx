@@ -125,14 +125,16 @@ export default function Catalog() {
         </div>
         <div className="flex items-center gap-3">
           {siteSettings.catalogPdfUrl ? (
-            <a href={siteSettings.catalogPdfUrl} target="_blank" rel="noopener noreferrer" download="Sukar-Furniture-Catalog.pdf" className="hidden lg:flex h-10 px-4 items-center gap-2 bg-dark-3/80 border border-white/10 rounded-full text-white text-[13px] font-bold hover:bg-white/10 hover:border-gold/30 hover:text-gold transition-all shadow-sm">
-              <FileText size={16} className="text-gold" /> تنزيل الكتالوج
+            <a href={siteSettings.catalogPdfUrl} target="_blank" rel="noopener noreferrer" download="Sukar-Furniture-Catalog.pdf" className="flex h-10 w-10 lg:w-auto px-0 lg:px-4 items-center justify-center lg:justify-start gap-2 bg-dark-3/80 border border-white/10 rounded-full text-white text-[13px] font-bold hover:bg-white/10 hover:border-gold/30 hover:text-gold transition-all shadow-sm">
+              <FileText size={16} className="text-gold shrink-0" />
+              <span className="hidden lg:inline">تنزيل الكتالوج</span>
             </a>
           ) : (
             <button onClick={() => {
               alert('عذراً، لم يقم الإداري بإنشاء الكتالوج بعد.');
-            }} className="hidden lg:flex h-10 px-4 items-center gap-2 bg-dark-3/80 border border-white/10 rounded-full text-white text-[13px] font-bold hover:bg-white/10 hover:border-gold/30 hover:text-gold transition-all shadow-sm">
-              <FileText size={16} className="text-gold" /> تنزيل الكتالوج
+            }} className="flex h-10 w-10 lg:w-auto px-0 lg:px-4 items-center justify-center lg:justify-start gap-2 bg-dark-3/80 border border-white/10 rounded-full text-white text-[13px] font-bold hover:bg-white/10 hover:border-gold/30 hover:text-gold transition-all shadow-sm">
+              <FileText size={16} className="text-gold shrink-0" />
+              <span className="hidden lg:inline">تنزيل الكتالوج</span>
             </button>
           )}
           <div className="hidden sm:flex items-center gap-1.5 px-3">
@@ -560,8 +562,6 @@ export default function Catalog() {
           </AnimatePresence>
         </main>
       </div>
-
-// Cleaned booking modal
 
       {isCartOpen && (
         <div className="fixed inset-0 bg-black/80 z-[100] flex justify-end backdrop-blur-sm" onClick={() => setIsCartOpen(false)}>
