@@ -550,17 +550,15 @@ export default function Admin() {
                      {existingImages.map((src, i) => (
                         <div key={src} className="relative w-16 h-16 shrink-0 rounded-lg overflow-hidden border border-white/10 group">
                            <img src={src} className="w-full h-full object-cover" />
-                           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                           <div className="absolute inset-0 bg-transparent flex items-start justify-start p-1">
                               <button
                                  type="button"
                                  onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
-                                    if(window.confirm('هل أنت متأكد من إزالة هذه الصورة؟')) {
-                                       setExistingImages(prev => prev.filter((_, idx) => idx !== i));
-                                    }
+                                    setExistingImages(prev => prev.filter((_, idx) => idx !== i));
                                  }}
-                                 className="text-red-400 hover:text-red-300 bg-red-500/20 p-1.5 rounded-lg backdrop-blur-sm relative z-50 cursor-pointer"
+                                 className="text-white hover:text-white bg-red-600 hover:bg-red-500 p-1 rounded-md shadow-md z-50 cursor-pointer transition-all"
                               >
                                  <Trash2 size={14} />
                               </button>
@@ -870,27 +868,25 @@ export default function Admin() {
                     {set.images.map((img: string, i: number) => (
                       <div key={img} className="relative group shrink-0 w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-dark-4 border border-white/10 overflow-hidden snap-start transition-all hover:border-gold/50 cursor-pointer">
                         <img src={img} alt="" className="w-full h-full object-contain p-1.5" />
-                        <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300">
-                           <div className="flex items-center gap-2 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                            <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); moveImage(set.id, set.images, i, 'up'); }} disabled={i === 0} className="text-white hover:text-gold bg-white/10 hover:bg-white/20 disabled:opacity-30 p-2 backdrop-blur-md rounded-xl transition-all shadow-lg relative z-50 cursor-pointer"><ChevronRight size={16} /></button>
-                            <button onClick={async (e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  if (window.confirm('هل أنت متأكد من حذف هذه الصورة نهائيّاً من الطقم؟')) {
-                                    const newImages = set.images.filter((_, index) => index !== i);
-                                    try {
-                                      await updateDoc(doc(db, 'furniture_sets', set.id), { images: newImages });
-                                      setTimeout(() => {
-                                        generateAndUploadPdf().catch(e => console.log(e));
-                                      }, 2000);
-                                    } catch (err) {
-                                      alert('حدث خطأ');
-                                    }
-                                  }
-                            }} className="text-red-400 hover:text-red-300 bg-red-500/20 hover:bg-red-500/40 p-2 backdrop-blur-md rounded-xl transition-all shadow-lg relative z-50 cursor-pointer"><Trash2 size={16} /></button>
-                            <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); moveImage(set.id, set.images, i, 'down'); }} disabled={i === set.images.length - 1} className="text-white hover:text-gold bg-white/10 hover:bg-white/20 disabled:opacity-30 p-2 backdrop-blur-md rounded-xl transition-all shadow-lg relative z-50 cursor-pointer"><ChevronLeft size={16} /></button>
+                        <div className="absolute inset-x-0 bottom-0 top-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 flex flex-col items-center justify-end p-2 transition-all duration-300 pointer-events-none">
+                           <div className="flex items-center gap-2 pointer-events-auto">
+                            <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); moveImage(set.id, set.images, i, 'up'); }} disabled={i === 0} className="text-white hover:text-gold bg-white/20 disabled:opacity-30 p-1.5 backdrop-blur-md rounded-lg transition-all shadow-lg z-50 cursor-pointer"><ChevronRight size={16} /></button>
+                            <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); moveImage(set.id, set.images, i, 'down'); }} disabled={i === set.images.length - 1} className="text-white hover:text-gold bg-white/20 disabled:opacity-30 p-1.5 backdrop-blur-md rounded-lg transition-all shadow-lg z-50 cursor-pointer"><ChevronLeft size={16} /></button>
                            </div>
                         </div>
+                        <button type="button" onClick={async (e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              const newImages = set.images.filter((_, index) => index !== i);
+                              try {
+                                await updateDoc(doc(db, 'furniture_sets', set.id), { images: newImages });
+                                setTimeout(() => {
+                                  generateAndUploadPdf().catch(e => console.log(e));
+                                }, 2000);
+                              } catch (err) {
+                                console.error('Error deleting image:', err);
+                              }
+                        }} className="absolute top-1 left-1 text-white bg-red-600 hover:bg-red-500 p-1.5 rounded-lg shadow-lg z-[60] cursor-pointer transition-all"><Trash2 size={14} /></button>
                       </div>
                     ))}
                   </div>

@@ -107,31 +107,35 @@ export default function Catalog() {
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-dark text-text-main font-sans selection:bg-gold/30 print-container">
       {/* Header */}
-      <header className="h-[68px] glass-panel flex shrink-0 items-center justify-between px-4 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.5)] hide-on-print relative border-b border-gold/10">
-        <div className="flex items-center gap-3">
-          <button className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-dark-3/50 backdrop-blur-md border border-white/5 text-text-main hover:text-white hover:bg-gold/20 hover:border-gold/40 transition-all" onClick={() => setIsSidebarOpen(true)}>
-            <Menu size={16} />
+      <header className="h-[72px] bg-gradient-to-b from-dark-1/90 to-dark-2/90 backdrop-blur-xl flex shrink-0 items-center justify-between px-6 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.5)] hide-on-print relative border-b border-gold/10">
+        <div className="flex items-center gap-4">
+          <div className="w-[52px] h-[52px] rounded-xl bg-gradient-to-tr from-[#A84931] to-[#853723] border-[1px] border-white/5 flex flex-col items-center justify-center relative overflow-hidden shrink-0 shadow-[0_4px_15px_rgba(0,0,0,0.3)]">
+             <span className="text-white text-[11px] font-black font-sans leading-none">SUKAR</span>
+             <span className="text-white/80 text-[6px] font-bold font-sans mt-0.5 tracking-[1px]">FURNITURE</span>
+          </div>
+          <div className="text-right hidden sm:block">
+            <div className="text-[18px] font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-gold-l to-gold leading-[1.2] tracking-wide">
+              SUKAR <span className="font-sans font-black">FURNITURE</span>
+            </div>
+            <div className="text-[9px] text-white/50 font-bold tracking-[0.25em] uppercase mt-0.5">Premium Collection</div>
+          </div>
+          <button className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-dark-3/50 backdrop-blur-md border border-white/5 text-text-main hover:text-white hover:bg-gold/20 hover:border-gold/40 transition-all mr-2" onClick={() => setIsSidebarOpen(true)}>
+            <Menu size={18} />
           </button>
-          <div className="w-[52px] h-[52px] rounded-xl bg-gradient-to-tr from-dark-3 to-dark-1 border-[1px] border-gold/40 flex items-center justify-center relative overflow-hidden shrink-0 shadow-[0_2px_15px_rgba(200,149,42,0.15)]">
-            <img src={LOGO_URL} alt="Logo" className="absolute inset-0 w-full h-full object-contain p-1" />
-          </div>
-          <div>
-            <div className="text-[17px] font-serif font-bold text-white leading-[1.2] tracking-wide">SUKAR <span className="font-sans text-gold-l">FURNITURE</span></div>
-            <div className="text-[10px] text-text-dim/80 font-bold tracking-[0.2em] uppercase mt-0.5">Premium Collection</div>
-          </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {siteSettings.catalogPdfUrl ? (
-            <a href={siteSettings.catalogPdfUrl} target="_blank" rel="noopener noreferrer" download="Sukar-Furniture-Catalog.pdf" className="flex h-9 px-3 items-center gap-2 bg-dark-3 border-[1.5px] border-white/10 rounded-lg text-white text-xs font-bold hover:bg-white/10 transition-all">
-              <FileText size={14} className="text-gold" /> تنزيل الكتالوج
+            <a href={siteSettings.catalogPdfUrl} target="_blank" rel="noopener noreferrer" download="Sukar-Furniture-Catalog.pdf" className="hidden lg:flex h-10 px-4 items-center gap-2 bg-dark-3/80 border border-white/10 rounded-full text-white text-[13px] font-bold hover:bg-white/10 hover:border-gold/30 hover:text-gold transition-all shadow-sm">
+              <FileText size={16} className="text-gold" /> تنزيل الكتالوج
             </a>
           ) : (
             <button onClick={() => {
               alert('عذراً، لم يقم الإداري بإنشاء الكتالوج بعد.');
-            }} className="flex h-9 px-3 items-center gap-2 bg-dark-3 border-[1.5px] border-white/10 rounded-lg text-white text-xs font-bold hover:bg-white/10 transition-all">
-              <FileText size={14} className="text-gold" /> تنزيل الكتالوج
+            }} className="hidden lg:flex h-10 px-4 items-center gap-2 bg-dark-3/80 border border-white/10 rounded-full text-white text-[13px] font-bold hover:bg-white/10 hover:border-gold/30 hover:text-gold transition-all shadow-sm">
+              <FileText size={16} className="text-gold" /> تنزيل الكتالوج
             </button>
           )}
+          <div className="hidden sm:flex items-center gap-1.5 px-3">
           {siteSettings.socialLinks?.map((link, i) => {
             let IconPattern = <LinkIcon size={14} />;
             const platform = link.platform?.toLowerCase() || '';
@@ -142,29 +146,30 @@ export default function Catalog() {
             else if (platform.includes('linkedin') || platform.includes('لينكدين')) IconPattern = <Linkedin size={14} />;
 
             return (
-             <a key={i} href={link.url} target="_blank" rel="noreferrer" className="hidden sm:flex w-9 h-9 items-center justify-center bg-dark-3 border-[1.5px] border-white/10 rounded-lg text-white font-bold hover:bg-white/10 hover:text-gold transition-all shadow-[0_0_10px_rgba(0,0,0,0.2)]" title={link.platform}>
+             <a key={i} href={link.url} target="_blank" rel="noreferrer" className="w-9 h-9 flex items-center justify-center bg-dark-3/50 rounded-full text-white/70 hover:bg-gold/10 hover:text-gold transition-all" title={link.platform}>
                {IconPattern}
              </a>
             );
           })}
           {siteSettings.contactEmail && (
-            <a href={`mailto:${siteSettings.contactEmail}`} target="_top" className="hidden sm:flex w-9 h-9 items-center justify-center bg-dark-3 border-[1.5px] border-white/10 rounded-lg text-white font-bold hover:bg-white/10 hover:text-gold transition-all shadow-[0_0_10px_rgba(0,0,0,0.2)]" title="راسلنا عبر البريد الإلكتروني">
+            <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${siteSettings.contactEmail}`} target="_blank" rel="noreferrer" className="w-9 h-9 flex items-center justify-center bg-dark-3/50 rounded-full text-white/70 hover:bg-gold/10 hover:text-gold transition-all" title="راسلنا عبر البريد الإلكتروني">
                <Mail size={14} />
             </a>
           )}
+          </div>
           {siteSettings.whatsappNumbers?.length > 0 ? (
-             <a href={`https://wa.me/${siteSettings.whatsappNumbers[0].number}`} target="_blank" rel="noreferrer" className="hidden sm:flex h-9 px-4 items-center gap-2 bg-gold-dim border-[1.5px] border-gold/40 rounded-lg text-gold-l text-xs font-extrabold hover:bg-gold hover:text-white hover:border-gold shadow-[0_3px_14px_rgba(200,149,42,0.35)] transition-all">
-               <Smartphone size={14} /> تواصل
+             <a href={`https://wa.me/${siteSettings.whatsappNumbers[0].number}`} target="_blank" rel="noreferrer" className="flex h-10 px-6 items-center gap-2 bg-gradient-to-r from-gold to-gold-l border-none rounded-full text-dark-1 text-[14px] font-black hover:opacity-90 shadow-[0_4px_15px_rgba(200,149,42,0.4)] transition-all transform hover:scale-105">
+               <span className="leading-none pt-0.5">تواصل</span>
              </a>
           ) : (
-             <a href="https://wa.me/201090902911" target="_blank" rel="noreferrer" className="hidden sm:flex h-9 px-4 items-center gap-2 bg-gold-dim border-[1.5px] border-gold/40 rounded-lg text-gold-l text-xs font-extrabold hover:bg-gold hover:text-white hover:border-gold shadow-[0_3px_14px_rgba(200,149,42,0.35)] transition-all">
-               <Smartphone size={14} /> تواصل
+             <a href="https://wa.me/201090902911" target="_blank" rel="noreferrer" className="flex h-10 px-6 items-center gap-2 bg-gradient-to-r from-gold to-gold-l border-none rounded-full text-dark-1 text-[14px] font-black hover:opacity-90 shadow-[0_4px_15px_rgba(200,149,42,0.4)] transition-all transform hover:scale-105">
+               <span className="leading-none pt-0.5">تواصل</span>
              </a>
           )}
-          <button onClick={() => setIsCartOpen(true)} className="relative flex w-9 h-9 items-center justify-center bg-dark-3 border-[1.5px] border-white/10 rounded-lg text-white hover:bg-white/10 hover:text-gold transition-all">
-            <ShoppingCart size={16} />
+          <button onClick={() => setIsCartOpen(true)} className="relative flex w-10 h-10 items-center justify-center bg-dark-2 border border-white/10 rounded-full text-white hover:bg-white/10 hover:border-gold/50 hover:text-gold transition-all shadow-sm">
+            <ShoppingCart size={18} />
             {cartItems.length > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#A84931] text-white rounded-full text-[10px] font-bold flex items-center justify-center border-[1px] border-dark-1 shadow-sm">
                 {cartItems.reduce((acc, c) => acc + c.quantity, 0)}
               </span>
             )}
@@ -179,86 +184,85 @@ export default function Catalog() {
 
         {/* Sidebar */}
         <aside className={cn(
-          "fixed md:relative top-0 bottom-0 md:h-full w-[300px] glass-panel border-r border-gold/10 flex flex-col shrink-0 z-50 transition-transform duration-300 md:translate-x-0 right-0 max-w-[92vw]",
-          isSidebarOpen ? "translate-x-0" : "translate-x-full"
+          "fixed md:relative top-0 bottom-0 md:h-full w-[300px] bg-dark-1/80 backdrop-blur-xl border-r border-gold/10 flex flex-col shrink-0 z-50 transition-transform duration-300 md:translate-x-0 left-0 max-w-[92vw] shadow-[10px_0_30px_rgba(0,0,0,0.5)]",
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}>
-          <div className="p-4 border-b border-white/5 flex items-center justify-between backdrop-blur-sm bg-dark/30">
-            <span className="text-[10px] font-inter font-bold text-gold-dim/80 tracking-[2px] uppercase">INDEX</span>
+          <div className="p-4 border-b border-white/5 flex items-center justify-between bg-black/20" dir="rtl">
+            <span className="text-[11px] font-sans font-bold text-gold-dim tracking-[2px] uppercase">INDEX</span>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-white/50 font-inter">{sets.filter(s => !s.isAbout).length} Items</span>
+              <span className="text-[12px] text-white/50 font-inter font-bold">{sets.filter(s => !s.isAbout).length} Items</span>
               <button className="md:hidden w-[30px] h-[30px] flex items-center justify-center bg-dark-3/50 rounded-lg text-text-main hover:text-white transition-all" onClick={() => setIsSidebarOpen(false)}>
                 <X size={12} />
               </button>
             </div>
           </div>
 
-          <div className="p-3 border-b border-white/5 relative bg-dark/20">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-text-dim" size={14} />
+          <div className="p-4 border-b border-white/5 relative bg-black/10" dir="rtl">
+            <Search className="absolute right-7 top-1/2 -translate-y-1/2 text-text-dim" size={16} />
             <input
               type="text"
               placeholder="بحث عن طقم..."
-              className="w-full h-10 bg-dark-3/40 border-b border-white/10 rounded-lg pl-10 pr-4 text-[13px] text-white outline-none focus:border-gold focus:bg-white/5 transition-all shadow-inner backdrop-blur-sm"
+              className="w-full h-11 bg-dark-3/60 border border-white/5 rounded-xl pr-10 pl-4 text-[13px] text-white outline-none focus:border-gold/50 focus:bg-white/5 transition-all shadow-inner focus:shadow-[0_0_15px_rgba(200,149,42,0.1)]"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
-          <div className="flex-1 overflow-y-auto p-3 custom-scrollbar space-y-1.5">
+          <div className="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-2">
             {filteredSets.map((set, mapIdx) => (
               <div
                 key={set.id}
                 onClick={() => { setActiveSetId(set.id); if(window.innerWidth <= 768) setIsSidebarOpen(false); }}
                 className={cn(
-                  "flex items-center gap-3 p-2.5 rounded-xl cursor-pointer transition-all duration-300 border backdrop-blur-sm group relative overflow-hidden",
-                  activeSetId === set.id ? "bg-gradient-to-r from-gold/10 to-transparent border-gold/30 shadow-[0_4px_20px_rgba(200,149,42,0.1)]" : "border-white/5 hover:border-white/10 hover:bg-white/5"
+                  "flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-300 border bg-dark-3/30 hover:bg-dark-3/80 group relative overflow-hidden",
+                  activeSetId === set.id ? "bg-gradient-to-r from-gold/10 to-dark-3/50 border-gold/40 shadow-[0_4px_20px_rgba(200,149,42,0.1)]" : "border-white/5 hover:border-white/20"
                 )}
+                dir="rtl"
               >
-                {activeSetId === set.id && <div className="absolute left-0 top-0 bottom-0 w-1 bg-gold rounded-r-full" />}
+                {activeSetId === set.id && <div className="absolute right-0 top-0 bottom-0 w-1 bg-gold rounded-l-full shadow-[0_0_10px_rgba(200,149,42,0.8)]" />}
                 
                 <div className={cn(
-                  "w-[48px] h-[48px] rounded-lg flex items-center justify-center shrink-0 overflow-hidden relative shadow-inner",
-                  set.isAbout ? "bg-gradient-to-br from-gold/20 to-transparent border border-gold/20" : "bg-dark-3/50 border border-white/5"
+                  "w-[54px] h-[54px] rounded-lg flex items-center justify-center shrink-0 overflow-hidden relative shadow-inner border",
+                  set.isAbout ? "bg-gradient-to-br from-gold/20 to-transparent border-gold/20" : "bg-dark shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)] border-white/5"
                 )}>
                   {set.isAbout ? (
-                    <Building className="text-gold" size={20} />
+                    <Building className="text-gold" size={24} />
                   ) : set.images?.[0] ? (
-                    <img src={set.images[0]} alt={set.name} className="w-full h-full object-cover mix-blend-luminosity opacity-80 group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-500" />
+                    <img src={set.images[0]} alt={set.name} className="w-full h-full object-cover mix-blend-luminosity opacity-80 group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-500 hover:scale-110" />
                   ) : (
-                    <Armchair className="text-text-dim" size={14} />
+                    <Armchair className="text-text-dim" size={18} />
                   )}
                 </div>
-                <div className="flex-1 overflow-hidden relative z-10">
-                  <div className="text-[13px] font-sans font-bold text-white/90 truncate group-hover:text-white transition-colors">{set.name}</div>
-                  <div className="text-[10px] text-text-dim mt-0.5 font-medium tracking-wide">
-                    {set.isAbout ? 'Company Profile' : set.videos?.length ? <span className="text-teal-l flex items-center gap-1"><PlayCircle size={8}/> Media</span> : 'Furniture Set'}
+                <div className="flex-1 overflow-hidden relative z-10 pr-1">
+                  <div className="text-[14px] font-sans font-black text-white/90 truncate group-hover:text-white transition-colors tracking-wide">{set.name}</div>
+                  <div className="text-[10px] text-white/40 mt-0.5 font-bold font-inter tracking-[1px] uppercase">
+                    {set.isAbout ? 'Company Profile' : set.videos?.length ? <span className="text-teal-l flex items-center gap-1"><PlayCircle size={10}/> Media</span> : 'Furniture Set'}
                   </div>
                   {set.price && (
-                    <div className="text-gold font-inter font-semibold text-[11px] mt-1 tracking-wider opacity-90 drop-shadow-sm">
-                      {set.price.replace(/السعر\s*[:\-]*\s*/g, '').trim()}
+                    <div className="text-gold font-inter font-bold text-[13px] mt-1 tracking-wider drop-shadow-sm">
+                      {set.price.replace(/السعر\s*[:\-]*\s*/g, '').replace(/[^0-9٠-٩]/g, '')} ج
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col items-center justify-center gap-1.5 shrink-0 z-10 relative">
+                <div className="flex flex-col items-center justify-center gap-2 shrink-0 z-10 relative pl-2 border-l border-white/5 pr-1">
                   {!set.isAbout && (
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        // Instead of replacing the existing item, optionally we can just increment.
-                        // Wait, he wants the multiple item UI in the cart. The cart icon in sidebar should add to cart.
                         handleAddToCart(set);
                       }}
                       className={cn(
-                        "w-6 h-6 rounded-md flex items-center justify-center transition-all",
-                        cartItems.some(i => i.item.id === set.id) ? "bg-red-500/20 text-red-400 hover:bg-red-500/30" : "bg-dark-4 border border-white/5 text-white/50 hover:bg-dark-3 hover:text-white"
+                        "w-8 h-8 rounded-lg flex items-center justify-center transition-all shadow-sm",
+                        cartItems.some(i => i.item.id === set.id) ? "bg-[#A84931]/20 text-[#A84931] hover:bg-[#A84931]/30 border border-[#A84931]/40" : "bg-dark border border-white/10 text-white/50 hover:bg-white/10 hover:text-white hover:border-gold/30"
                       )}
                       title="أضف إلى السلة"
                     >
-                      <ShoppingCart size={12} className={cartItems.some(i => i.item.id === set.id) ? "fill-red-400" : ""} />
+                      <ShoppingCart size={14} className={cartItems.some(i => i.item.id === set.id) ? "fill-[#A84931]" : ""} />
                     </button>
                   )}
                   {activeSetId === set.id && (
-                    <div className="w-5 h-5 rounded-md bg-gold flex items-center justify-center text-white">
-                      <ChevronLeft size={10} strokeWidth={3}/>
+                    <div className="w-6 h-6 rounded-lg bg-gold/20 border border-gold/50 flex items-center justify-center text-gold shadow-[0_0_10px_rgba(200,149,42,0.3)]">
+                      <ChevronLeft size={14} strokeWidth={2.5}/>
                     </div>
                   )}
                 </div>
@@ -277,51 +281,50 @@ export default function Catalog() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="flex-1 flex flex-col items-center py-16 px-6 min-h-screen relative overflow-y-auto"
+              className="flex-1 flex flex-col items-center py-20 px-6 min-h-screen relative overflow-y-auto bg-gradient-to-b from-[#101010] to-[#0A0A0A]"
             >
+              <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `radial-gradient(circle at 50% 50%, rgba(200, 149, 42, 0.4) 1px, transparent 1.5px)`, backgroundSize: '24px 24px', pointerEvents: 'none' }} />
+
               {/* Elegant central logo */}
               <div className="relative z-10 flex flex-col items-center w-full max-w-2xl mx-auto mb-16">
-                <div className="w-[140px] h-[140px] rounded-2xl glass-panel border border-gold/40 flex items-center justify-center mb-8 shadow-[0_20px_50px_rgba(200,149,42,0.15)] relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                  <img src={LOGO_URL} alt="Logo" className="w-[100px] h-[100px] object-contain relative z-10" />
+                <div className="w-[100px] h-[100px] rounded-2xl bg-gradient-to-tr from-[#A84931] to-[#853723] border border-white/5 flex flex-col items-center justify-center mb-10 shadow-[0_12px_30px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+                  <span className="text-white text-[20px] font-black font-sans leading-none tracking-tight shadow-sm">SUKAR</span>
+                  <span className="text-white/80 text-[10px] font-bold font-sans mt-1 tracking-[2px] shadow-sm">FURNITURE</span>
                 </div>
                 
-                <h1 className="text-[32px] md:text-[40px] font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-gold-l via-gold to-gold-l mb-4 drop-shadow-sm tracking-wide">
+                <h1 className="text-[36px] md:text-[44px] font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F9D976] via-[#E0B44F] to-[#F9D976] mb-6 tracking-[0.15em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
                   SUKAR FURNITURE
                 </h1>
                 
-                <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent mb-8" />
-                
-                <div className="text-center leading-relaxed text-[15px] font-sans text-white/80 max-w-xl">
-                  {activeSet.description.map((p, i) => <p key={i} className="mb-3">{p}</p>)}
+                <div className="text-center leading-[2] text-[15px] font-sans text-white/85 max-w-[800px] font-light">
+                  {activeSet.description.map((p, i) => <p key={i} className="mb-4">{p}</p>)}
                 </div>
               </div>
 
               {/* The Index Menu */}
-              <div className="w-full max-w-4xl mx-auto relative z-10 flex flex-col gap-8">
-                <div className="text-center font-serif text-[24px] text-gold-l tracking-[4px] uppercase mb-2">Collection Index</div>
+              <div className="w-full max-w-[850px] mx-auto relative z-10 flex flex-col gap-10">
+                <div className="text-center font-serif text-[26px] font-black text-gold tracking-[0.2em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                  Collection Index
+                </div>
                 
-                <div className="glass-panel border-gold/20 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.4)] overflow-hidden relative">
-                  {/* Subtle brushed metal effect */}
-                  <div className="absolute inset-0 opacity-10 mix-blend-overlay bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjI1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+')]"></div>
-                  
-                  <div className="flex flex-col relative z-10 divide-y divide-gold/10">
+                <div className="bg-gradient-to-br from-dark-1/80 to-dark-2/90 border border-gold/15 rounded-[24px] shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden relative backdrop-blur-2xl px-2 py-4">
+                  <div className="flex flex-col relative z-10 divide-y divide-white/5">
                     {sets.filter(s => !s.isAbout).map((item, idx) => (
                       <div 
                         key={item.id} 
                         onClick={() => setActiveSetId(item.id)}
-                        className="flex items-center justify-between p-5 md:px-8 hover:bg-gold/5 transition-colors cursor-pointer group"
+                        className="flex items-center justify-between p-5 md:px-8 hover:bg-white/[0.02] transition-colors cursor-pointer group"
                       >
                         <div className="flex items-center gap-6">
-                          <span className="text-gold/50 font-serif text-lg w-8 font-black group-hover:text-gold transition-colors">{(idx + 1).toString().padStart(2, '0')}</span>
-                          <span className="text-white/90 font-serif text-[18px] md:text-[20px] group-hover:text-gold-l transition-colors">{item.name}</span>
+                          <span className="text-gold/70 font-serif text-[20px] w-8 font-black group-hover:text-gold transition-colors">{(idx + 1).toString().padStart(2, '0')}</span>
+                          <span className="text-white font-sans font-bold text-[18px] md:text-[22px] group-hover:text-gold-l transition-colors tracking-wide">{item.name}</span>
                         </div>
                         {item.price && (
-                          <div className="flex items-center gap-3">
-                            <span className="text-[12px] font-sans text-white/40 uppercase tracking-widest hidden sm:inline">Price</span>
-                            <span className="text-gold-l font-inter font-bold text-[16px] md:text-[18px] tracking-wide relative">
-                               {item.price.replace(/السعر\s*[:\-]*\s*/g, '').trim()}
-                               <div className="absolute -bottom-1 left-0 right-0 h-[1px] bg-gold/30 scale-x-0 group-hover:scale-x-100 transition-transform origin-right duration-300"></div>
+                          <div className="flex items-center gap-4">
+                            <span className="text-[11px] font-sans text-white/40 uppercase tracking-[0.2em] hidden sm:inline font-bold">Price</span>
+                            <span className="text-gold font-sans font-bold text-[18px] md:text-[20px] tracking-wide relative min-w-[90px] text-right">
+                               {item.price.replace(/السعر\s*[:\-]*\s*/g, '').replace(/[^0-9٠-٩]/g, '')} ج
+                               <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gold/50 scale-x-0 group-hover:scale-x-100 transition-transform origin-right duration-300"></div>
                             </span>
                           </div>
                         )}
@@ -359,7 +362,7 @@ export default function Catalog() {
                     </a>
                 ))}
                 {siteSettings.contactEmail && (
-                  <a href={`mailto:${siteSettings.contactEmail}`} target="_top" className="flex items-center gap-3 glass-panel border-white/10 rounded-xl px-5 py-3 hover:bg-white/5 transition-all hover:-translate-y-1">
+                  <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${siteSettings.contactEmail}`} target="_blank" rel="noreferrer" className="flex items-center gap-3 glass-panel border-white/10 rounded-xl px-5 py-3 hover:bg-white/5 transition-all hover:-translate-y-1">
                     <Mail size={18} className="text-gold" />
                     <span className="text-[14px] font-bold text-white">البريد الإلكتروني</span>
                   </a>
