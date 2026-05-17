@@ -1,0 +1,24 @@
+{
+  "entities": {
+    "FurnitureSet": {
+      "title": "Furniture Set",
+      "description": "Represents a furniture item or set in the catalog.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the set" },
+        "price": { "type": "string", "description": "Price of the set" },
+        "description": { "type": "array", "items": { "type": "string" }, "description": "Array of descriptive strings/specs" },
+        "images": { "type": "array", "items": { "type": "string" }, "description": "Array of image URLs" },
+        "videos": { "type": "array", "items": { "type": "string" }, "description": "Array of video URLs" },
+        "createdAt": { "type": "number", "description": "Timestamp in milliseconds" }
+      },
+      "required": ["name", "price", "description", "images", "videos", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/furniture_sets/{setId}": {
+      "schema": "FurnitureSet",
+      "description": "The catalog of all furniture sets"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "GAS Code Explorer",
+  "description": "An application to help analyze and understand Google Apps Script code and libraries.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

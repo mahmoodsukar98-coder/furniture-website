@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global Helpers
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { 
+      // Hardcoded owner email or exists in admins collection
+      return request.auth != null && (
+        request.auth.token.email == 'mahmoodsukar98@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.token.email))
+      );
+    }
+
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /admins/{email} {
+      allow read, write: if true;
+    }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    function isValidFurnitureSet(data) {
+      return data.keys().hasAll(['name', 'price', 'description', 'images', 'videos', 'createdAt']) &&
+             data.keys().size() == 6 &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 200 &&
+             data.price is string && data.price.size() <= 100 &&
+             data.description is list && data.description.size() <= 50 &&
+             data.images is list && data.images.size() <= 20 &&
+             data.videos is list && data.videos.size() <= 10 &&
+             data.createdAt is number;
+    }
+
+    match /furniture_sets/{setId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

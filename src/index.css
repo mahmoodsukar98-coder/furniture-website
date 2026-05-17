@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-gold: #C8952A; /* Kept original base gold, but making accents richer */
+  --color-gold-l: #e0b44f;
+  --color-gold-xl: #F5CE72;
+  --color-gold-dim: rgba(200, 149, 42, 0.13);
+  --color-gold-glow: rgba(200, 149, 42, 0.4);
+
+  /* Deep Charcoal base instead of navy */
+  --color-dark: #121212; 
+  --color-dark-1: #161616;
+  --color-dark-2: #1a1a1a;
+  --color-dark-3: #222222;
+  --color-dark-4: #2a2a2a;
+  --color-navy: #121212;
+  
+  --color-teal: #004b49; 
+  --color-teal-dim: rgba(0, 75, 73, 0.2);
+
+  --color-text-main: #F2EFE9;
+  --color-text-dim: #C4BCB3;
+  --color-text-muted: #888888;
+}
+
+body {
+  background-color: var(--color-dark);
+  /* Elegant deep textured charcoal/marble effect */
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(200, 149, 42, 0.03), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(0, 75, 73, 0.05), transparent 25%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  color: var(--color-text-main);
+  font-family: var(--font-sans);
+  direction: rtl;
+}
+
+body ::selection {
+  background-color: rgba(200, 149, 42, 0.3);
+  color: white;
+}
+
+.dir-ltr { direction: ltr; }
+.dir-rtl { direction: rtl; }
+
+/* Custom scrollbar matching original */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-dark-2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 99px;
+}
+
+.animation-fade-up {
+  animation: fadeUp 0.3s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  background: rgba(34, 34, 34, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+@media print {
+  body {
+    background-color: white !important;
+    background-image: none !important;
+    color: black !important;
+  }
+  .hide-on-print {
+    display: none !important;
+  }
+  .print-container {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  aside {
+    display: none !important;
+  }
+  main {
+    background-color: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .main-content-wrapper {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  * {
+    color: black !important;
+    background: white !important;
+    box-shadow: none !important;
+    border-color: #ddd !important;
+  }
+  img, video {
+    background-color: white !important;
+    page-break-inside: auto;
+  }
+}
