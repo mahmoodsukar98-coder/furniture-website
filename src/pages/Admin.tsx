@@ -17,6 +17,7 @@ export default function Admin() {
   const [existingImages, setExistingImages] = useState<string[]>([]);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [priceCurrency, setPriceCurrency] = useState('');
   const [desc, setDesc] = useState('');
   const [images, setImages] = useState<FileList | null>(null);
   const [loading, setLoading] = useState(false);
@@ -334,10 +335,12 @@ export default function Admin() {
 
       const descriptionArray = desc.split('\n').filter(l => l.trim() !== '');
 
+      const finalPrice = priceCurrency ? `${price.trim()} ${priceCurrency}` : price.trim();
+
       if (editingId) {
         await updateDoc(doc(db, 'furniture_sets', editingId), {
           name,
-          price,
+          price: finalPrice,
           description: descriptionArray,
           images: imageUrls,
           updatedAt: Date.now()
@@ -347,7 +350,7 @@ export default function Admin() {
       } else {
         await addDoc(collection(db, 'furniture_sets'), {
           name,
-          price,
+          price: finalPrice,
           description: descriptionArray,
           images: imageUrls,
           videos: [],
@@ -357,6 +360,7 @@ export default function Admin() {
 
       setName('');
       setPrice('');
+      setPriceCurrency('');
       setDesc('');
       setImages(null);
       setSuccess(true);
@@ -505,14 +509,28 @@ export default function Admin() {
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-text-dim mb-2 drop-shadow-md">السعر (جنيه مصري)</label>
-              <input
-                type="text"
-                value={price}
-                onChange={e => setPrice(e.target.value)}
-                className="w-full bg-dark-3/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-all placeholder:text-dark-4"
-                placeholder="مثال: 55,000"
-              />
+              <label className="block text-sm font-bold text-text-dim mb-2 drop-shadow-md">السعر والقيمة</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={price}
+                  onChange={e => setPrice(e.target.value)}
+                  className="flex-1 bg-dark-3/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-all placeholder:text-dark-4"
+                  placeholder="مثال: 55000"
+                />
+                {(siteSettings.currencies && siteSettings.currencies.length > 0) && (
+                  <select
+                    value={priceCurrency}
+                    onChange={e => setPriceCurrency(e.target.value)}
+                    className="w-32 bg-dark-3/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-all text-white dir-rtl"
+                  >
+                    <option value="">بدون عملة</option>
+                    {siteSettings.currencies.map(cur => (
+                      <option key={cur} value={cur}>{cur}</option>
+                    ))}
+                  </select>
+                )}
+              </div>
             </div>
 
             <div>
@@ -597,6 +615,7 @@ export default function Admin() {
                      setEditingId(null);
                      setName('');
                      setPrice('');
+                     setPriceCurrency('');
                      setDesc('');
                      setImages(null);
                      setExistingImages([]);
@@ -669,6 +688,34 @@ export default function Admin() {
                 onChange={e => setSiteSettings({ ...siteSettings, contactEmail: e.target.value })}
                 className="w-full bg-dark-3/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm font-sans dir-ltr focus:border-gold outline-none"
               />
+            </div>
+
+            {/* Currencies */}
+            <div className="pt-4 border-t border-white/10 mb-4">
+              <h3 className="font-bold text-white mb-3 flex items-center gap-2"><span className="text-gold font-bold">$$</span> العملات المتاحة</h3>
+              {siteSettings.currencies?.map((cur, idx) => (
+                <div key={idx} className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    value={cur}
+                    placeholder="رمز العملة (مثال: ج.م، $)"
+                    onChange={e => {
+                       const newCurs = [...(siteSettings.currencies || [])];
+                       newCurs[idx] = e.target.value;
+                       setSiteSettings({ ...siteSettings, currencies: newCurs });
+                    }}
+                    className="flex-1 bg-dark-3/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:border-gold outline-none"
+                  />
+                  <button type="button" onClick={() => {
+                    const newCurs = [...(siteSettings.currencies || [])];
+                    newCurs.splice(idx, 1);
+                    setSiteSettings({ ...siteSettings, currencies: newCurs });
+                  }} className="bg-red-500/20 text-red-400 px-4 py-2.5 rounded-xl hover:bg-red-500/30">حذف</button>
+                </div>
+              ))}
+              <button type="button" onClick={() => {
+                 setSiteSettings({ ...siteSettings, currencies: [...(siteSettings.currencies || []), ''] });
+              }} className="text-sm font-bold text-gold hover:text-white mt-1 mb-4">+ إضافة عملة جديدة</button>
             </div>
 
             {/* Social Links */}
@@ -823,7 +870,21 @@ export default function Admin() {
                       onClick={() => {
                         setEditingId(set.id);
                         setName(set.name);
-                        setPrice(set.price);
+                        
+                        let loadedPrice = set.price || '';
+                        let matchedCurrency = '';
+                        if (siteSettings.currencies && siteSettings.currencies.length > 0) {
+                          for (const cur of siteSettings.currencies) {
+                            if (loadedPrice.endsWith(cur)) {
+                              matchedCurrency = cur;
+                              loadedPrice = loadedPrice.replace(cur, '').trim();
+                              break;
+                            }
+                          }
+                        }
+                        setPrice(loadedPrice);
+                        setPriceCurrency(matchedCurrency);
+                        
                         setDesc(set.description?.join('\n') || '');
                         setExistingImages(set.images || []);
                         window.scrollTo({ top: 0, behavior: 'smooth' });

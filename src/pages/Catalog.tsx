@@ -34,6 +34,32 @@ export default function Catalog() {
   const [isWhatsAppDropdownOpen, setIsWhatsAppDropdownOpen] = useState(false);
   const [cartItems, setCartItems] = useState<{item: FurnitureSet, quantity: number}[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstallable, setIsInstallable] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setIsInstallable(false);
+    }
+    setDeferredPrompt(null);
+  };
 
   const handleAddToCart = (set: FurnitureSet, add: boolean = true) => {
     setCartItems(prev => {
@@ -105,9 +131,9 @@ export default function Catalog() {
   }, [activeSetId]);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-dark text-text-main font-sans selection:bg-gold/30 print-container">
+    <div className="flex flex-col h-[100dvh] overflow-hidden bg-dark text-text-main font-sans selection:bg-gold/30 print-container">
       {/* Header */}
-      <header className="h-[68px] glass-panel flex shrink-0 items-center justify-between px-4 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.5)] hide-on-print relative border-b border-gold/10">
+      <header className="glass-panel flex shrink-0 items-center justify-between px-4 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.5)] hide-on-print relative border-b border-gold/10" style={{ paddingTop: 'env(safe-area-inset-top)', minHeight: 'calc(68px + env(safe-area-inset-top))', paddingBottom: '16px', paddingTop: 'max(16px, env(safe-area-inset-top))' }}>
         <div className="flex items-center gap-3">
           <button className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-dark-3/50 backdrop-blur-md border border-white/5 text-text-main hover:text-white hover:bg-gold/20 hover:border-gold/40 transition-all" onClick={() => setIsSidebarOpen(true)}>
             <Menu size={16} />
@@ -169,6 +195,17 @@ export default function Catalog() {
               </span>
             )}
           </button>
+          
+          {isInstallable && (
+            <button 
+              onClick={handleInstallClick} 
+              className="flex sm:hidden h-9 px-3 items-center gap-2 bg-gradient-to-r from-gold/80 to-gold border border-gold-l/50 rounded-lg text-dark-1 text-[11px] font-black tracking-wide shadow-[0_3px_14px_rgba(200,149,42,0.35)] hover:-translate-y-0.5 transition-all"
+            >
+              <Download size={14} className="animate-bounce" /> 
+              تثبيت
+            </button>
+          )}
+
         </div>
       </header>
 
@@ -179,9 +216,9 @@ export default function Catalog() {
 
         {/* Sidebar */}
         <aside className={cn(
-          "fixed md:relative top-0 bottom-0 md:h-full w-[300px] glass-panel border-r border-gold/10 flex flex-col shrink-0 z-50 transition-transform duration-300 md:translate-x-0 right-0 max-w-[92vw]",
-          isSidebarOpen ? "translate-x-0" : "translate-x-full"
-        )}>
+          "fixed md:relative top-0 bottom-0 md:h-full w-[85vw] md:w-[300px] glass-panel border-r border-gold/10 flex flex-col shrink-0 z-50 transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] md:translate-x-0 right-0 max-w-[400px]",
+          isSidebarOpen ? "translate-x-0 shadow-[-20px_0_50px_rgba(0,0,0,0.5)]" : "translate-x-full md:shadow-none"
+        )} style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
           <div className="p-4 border-b border-white/5 flex items-center justify-between backdrop-blur-sm bg-dark/30">
             <span className="text-[10px] font-inter font-bold text-gold-dim/80 tracking-[2px] uppercase">INDEX</span>
             <div className="flex items-center gap-2">
@@ -222,7 +259,7 @@ export default function Catalog() {
                   {set.isAbout ? (
                     <Building className="text-gold" size={20} />
                   ) : set.images?.[0] ? (
-                    <img src={set.images[0]} alt={set.name} className="w-full h-full object-cover mix-blend-luminosity opacity-80 group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-500" />
+                    <img src={set.images[0]} alt={set.name} loading="lazy" className="w-full h-full object-cover mix-blend-luminosity opacity-80 group-hover:mix-blend-normal group-hover:opacity-100 transition-all duration-500" />
                   ) : (
                     <Armchair className="text-text-dim" size={14} />
                   )}
@@ -634,7 +671,7 @@ export default function Catalog() {
             </div>
 
             {cartItems.length > 0 && (
-              <div className="p-6 md:p-8 border-t border-white/5 bg-[#1A1A1A] relative z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
+              <div className="p-6 md:p-8 border-t border-white/5 bg-[#1A1A1A] relative z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.3)] pb-[calc(24px+env(safe-area-inset-bottom))]">
                 <button
                   onClick={() => {
                     const message = encodeURIComponent(`السلام عليكم، أحتاج للاستفسار أو حجز هذه المنتجات من الموقع:\n\n${cartItems.map((c, i) => `${i+1}- ${c.item.name} (الكمية: ${c.quantity})`).join('\n')}`);
