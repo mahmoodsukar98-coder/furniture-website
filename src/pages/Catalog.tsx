@@ -276,52 +276,63 @@ export default function Catalog() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="flex-1 flex flex-col items-center py-16 px-6 min-h-screen relative overflow-y-auto"
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="flex-1 flex flex-col items-center py-20 px-4 sm:px-8 min-h-screen relative overflow-y-auto bg-[#121212] bg-[radial-gradient(circle_at_50%_0%,rgba(40,40,40,1)_0%,rgba(18,18,18,1)_100%)] w-full"
             >
-              {/* Elegant central logo */}
-              <div className="relative z-10 flex flex-col items-center w-full max-w-2xl mx-auto mb-16">
-                <div className="w-[140px] h-[140px] rounded-2xl glass-panel border border-gold/40 flex items-center justify-center mb-8 shadow-[0_20px_50px_rgba(200,149,42,0.15)] relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                  <img src={LOGO_URL} alt="Logo" className="w-[100px] h-[100px] object-contain relative z-10" />
+              {/* Elegant central logo - Refined Copper-Terracotta finish */}
+              <div className="relative z-10 flex flex-col items-center w-full max-w-3xl mx-auto mb-14 mt-8">
+                <div className="w-[80px] h-[80px] rounded-2xl bg-gradient-to-br from-[#B85338] to-[#8A3722] border-[1.5px] border-white/10 flex items-center justify-center mb-10 shadow-[0_10px_30px_rgba(0,0,0,0.5),inset_0_2px_10px_rgba(255,255,255,0.2)]">
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="text-white text-[13px] font-black font-inter tracking-wide leading-none">SUKAR</span>
+                    <span className="text-white/80 text-[7px] font-bold font-inter tracking-[2px] leading-none mt-1">FURNITURE</span>
+                  </div>
                 </div>
                 
-                <h1 className="text-[32px] md:text-[40px] font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-gold-l via-gold to-gold-l mb-4 drop-shadow-sm tracking-wide">
+                {/* Brand Name - Metallic Brushed Gold */}
+                <h1 className="text-[36px] md:text-[46px] font-serif font-bold text-transparent bg-clip-text bg-gradient-to-b from-[#FFF2B2] via-[#D4AF37] to-[#AA7C11] mb-8 tracking-[6px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-center">
                   SUKAR FURNITURE
                 </h1>
                 
-                <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent mb-8" />
-                
-                <div className="text-center leading-relaxed text-[15px] font-sans text-white/80 max-w-xl">
-                  {activeSet.description.map((p, i) => <p key={i} className="mb-3">{p}</p>)}
+                {/* Intro text - Clean, thin white/silver Arabic */}
+                <div className="text-center leading-[2] text-[15px] md:text-[17px] font-sans text-[#E0E0E0] max-w-2xl font-light tracking-wide space-y-4">
+                  {activeSet.description.map((p, i) => <p key={i} className="drop-shadow-sm">{p}</p>)}
                 </div>
               </div>
 
               {/* The Index Menu */}
-              <div className="w-full max-w-4xl mx-auto relative z-10 flex flex-col gap-8">
-                <div className="text-center font-serif text-[24px] text-gold-l tracking-[4px] uppercase mb-2">Collection Index</div>
+              <div className="w-full max-w-[850px] mx-auto relative z-10 flex flex-col gap-10 mt-6">
+                <div className="text-center font-serif text-[20px] md:text-[24px] text-[#D4AF37] tracking-[5px] uppercase font-bold drop-shadow-md">
+                  Collection Index
+                </div>
                 
-                <div className="glass-panel border-gold/20 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.4)] overflow-hidden relative">
-                  {/* Subtle brushed metal effect */}
-                  <div className="absolute inset-0 opacity-10 mix-blend-overlay bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjI1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+')]"></div>
+                {/* Index Card - Sleek dark glassmorphism */}
+                <div className="bg-gradient-to-b from-[#1E1E1E]/90 to-[#121212]/95 backdrop-blur-xl border border-[#D4AF37]/20 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden relative w-full mb-10">
+                  <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjM1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+')] opacity-[0.03] pointer-events-none mix-blend-overlay"></div>
                   
-                  <div className="flex flex-col relative z-10 divide-y divide-gold/10">
-                    {sets.filter(s => !s.isAbout).map((item, idx) => (
+                  <div className="flex flex-col relative z-10">
+                    {sets.filter(s => !s.isAbout).map((item, idx, arr) => (
                       <div 
                         key={item.id} 
                         onClick={() => setActiveSetId(item.id)}
-                        className="flex items-center justify-between p-5 md:px-8 hover:bg-gold/5 transition-colors cursor-pointer group"
+                        className={cn(
+                          "flex items-center justify-between p-6 md:px-10 transition-all duration-300 cursor-pointer group relative hover:bg-[#D4AF37]/5",
+                          idx !== arr.length - 1 ? "border-b border-[#D4AF37]/10" : ""
+                        )}
                       >
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#D4AF37] scale-y-0 group-hover:scale-y-100 transition-transform origin-center"></div>
                         <div className="flex items-center gap-6">
-                          <span className="text-gold/50 font-serif text-lg w-8 font-black group-hover:text-gold transition-colors">{(idx + 1).toString().padStart(2, '0')}</span>
-                          <span className="text-white/90 font-serif text-[18px] md:text-[20px] group-hover:text-gold-l transition-colors">{item.name}</span>
+                          <span className="text-[#D4AF37]/80 font-serif text-[18px] md:text-[20px] font-bold group-hover:text-[#D4AF37] transition-colors tracking-wider w-8 text-center drop-shadow-sm">
+                            {(idx + 1).toString().padStart(2, '0')}
+                          </span>
+                          <span className="text-white font-sans text-[18px] md:text-[22px] font-bold group-hover:text-[#F9F9F9] transition-colors tracking-wide">
+                            {item.name}
+                          </span>
                         </div>
                         {item.price && (
-                          <div className="flex items-center gap-3">
-                            <span className="text-[12px] font-sans text-white/40 uppercase tracking-widest hidden sm:inline">Price</span>
-                            <span className="text-gold-l font-inter font-bold text-[16px] md:text-[18px] tracking-wide relative">
+                          <div className="flex items-center gap-4 text-left mr-auto dir-ltr">
+                            <span className="text-[10px] md:text-[11px] font-inter text-white/40 uppercase tracking-[3px] font-semibold mt-1">Price</span>
+                            <span className="text-[#D4AF37] font-sans font-bold text-[18px] md:text-[22px] tracking-wide drop-shadow-md">
                                {item.price.replace(/السعر\s*[:\-]*\s*/g, '').trim()}
-                               <div className="absolute -bottom-1 left-0 right-0 h-[1px] bg-gold/30 scale-x-0 group-hover:scale-x-100 transition-transform origin-right duration-300"></div>
                             </span>
                           </div>
                         )}
@@ -332,43 +343,29 @@ export default function Catalog() {
               </div>
 
               {/* Contact section */}
-              <div className="flex flex-wrap gap-4 justify-center w-full max-w-2xl mx-auto mt-20 relative z-10">
+              <div className="flex flex-wrap gap-4 justify-center w-full max-w-2xl mx-auto mt-10 relative z-10 pb-20">
                 {siteSettings.whatsappNumbers && siteSettings.whatsappNumbers.length > 0 ? (
                   siteSettings.whatsappNumbers.map((num, i) => (
-                    <a key={i} href={`https://wa.me/${num.number}`} target="_blank" rel="noreferrer" className="flex items-center gap-3 glass-panel !bg-gold/10 border-gold/30 rounded-xl px-5 py-3 hover:!bg-gold/20 hover:border-gold/50 transition-all shadow-lg hover:-translate-y-1">
-                      <Smartphone size={18} className="text-gold-l"/>
-                      <span className="text-[14px] font-inter font-bold text-white tracking-wider">{num.label ? num.label : num.number}</span>
+                    <a key={i} href={`https://wa.me/${num.number}`} target="_blank" rel="noreferrer" className="flex items-center gap-3 bg-[#1A1A1A] border border-[#D4AF37]/30 rounded-xl px-6 py-3.5 hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/60 transition-all shadow-lg hover:-translate-y-1 group">
+                      <Smartphone size={18} className="text-[#D4AF37] group-hover:scale-110 transition-transform"/>
+                      <span className="text-[14px] font-inter font-bold text-[#E0E0E0] tracking-wider">{num.label ? num.label : num.number}</span>
                     </a>
                   ))
                 ) : (
                   <>
-                    <a href="https://wa.me/201090902911" target="_blank" rel="noreferrer" className="flex items-center gap-3 glass-panel !bg-gold/10 border-gold/30 rounded-xl px-5 py-3 hover:!bg-gold/20 hover:border-gold/50 transition-all shadow-lg hover:-translate-y-1">
-                      <Smartphone size={18} className="text-gold-l"/>
-                      <span className="text-[14px] font-inter font-bold text-white tracking-wider">01090902911</span>
-                    </a>
-                    <a href="https://wa.me/201090903482" target="_blank" rel="noreferrer" className="flex items-center gap-3 glass-panel !bg-gold/10 border-gold/30 rounded-xl px-5 py-3 hover:!bg-gold/20 hover:border-gold/50 transition-all shadow-lg hover:-translate-y-1">
-                      <Smartphone size={18} className="text-gold-l"/>
-                      <span className="text-[14px] font-inter font-bold text-white tracking-wider">01090903482</span>
+                    <a href="https://wa.me/201090902911" target="_blank" rel="noreferrer" className="flex items-center gap-3 bg-[#1A1A1A] border border-[#D4AF37]/30 rounded-xl px-6 py-3.5 hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/60 transition-all shadow-lg hover:-translate-y-1 group">
+                      <Smartphone size={18} className="text-[#D4AF37] group-hover:scale-110 transition-transform"/>
+                      <span className="text-[14px] font-inter font-bold text-[#E0E0E0] tracking-wider">01090902911</span>
                     </a>
                   </>
                 )}
                 {siteSettings.socialLinks?.map((link, i) => (
-                    <a key={i} href={link.url} target="_blank" rel="noreferrer" className="flex items-center gap-3 glass-panel border-white/10 rounded-xl px-5 py-3 hover:bg-white/5 transition-all hover:-translate-y-1">
-                      <MessageCircle size={18} className="text-teal-l" />
-                      <span className="text-[14px] font-bold text-white">{link.platform}</span>
+                    <a key={i} href={link.url} target="_blank" rel="noreferrer" className="flex items-center gap-3 bg-[#1A1A1A] border border-white/10 rounded-xl px-6 py-3.5 hover:bg-white/10 transition-all hover:-translate-y-1 group">
+                      <MessageCircle size={18} className="text-white/70 group-hover:text-white transition-colors" />
+                      <span className="text-[14px] font-bold text-[#E0E0E0]">{link.platform}</span>
                     </a>
                 ))}
-                {siteSettings.contactEmail && (
-                  <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${siteSettings.contactEmail}`} target="_blank" rel="noreferrer" className="flex items-center gap-3 glass-panel border-white/10 rounded-xl px-5 py-3 hover:bg-white/5 transition-all hover:-translate-y-1">
-                    <Mail size={18} className="text-gold" />
-                    <span className="text-[14px] font-bold text-white">البريد الإلكتروني</span>
-                  </a>
-                )}
               </div>
-              
-              <footer className="mt-24 text-center text-white/30 text-[11px] font-sans tracking-widest uppercase relative z-10 pb-10">
-                © {new Date().getFullYear()} Sukar Furniture • Premium Catalog Edition
-              </footer>
             </motion.div>
           ) : (
             <motion.div 
@@ -558,73 +555,75 @@ export default function Catalog() {
         </main>
       </div>
 
-// Cleaned booking modal
-
       {isCartOpen && (
-        <div className="fixed inset-0 bg-black/80 z-[100] flex justify-end backdrop-blur-sm" onClick={() => setIsCartOpen(false)}>
+        <div className="fixed inset-0 bg-[#080808]/90 z-[100] flex justify-end backdrop-blur-md transition-opacity" onClick={() => setIsCartOpen(false)}>
           <motion.div
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-sm h-full bg-dark-2 border-l border-gold/30 shadow-2xl flex flex-col"
+            className="w-full max-w-md h-full bg-[#121212] border-l border-[#D4AF37]/20 shadow-[-20px_0_50px_rgba(0,0,0,0.8)] flex flex-col relative overflow-hidden"
           >
-            <div className="p-5 border-b border-white/10 flex justify-between items-center bg-dark-3/50">
-              <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <ShoppingCart size={20} className="text-gold" /> السلة
+            {/* Background texture overlay */}
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjM1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+')] opacity-[0.03] pointer-events-none mix-blend-overlay z-0"></div>
+            
+            <div className="p-6 md:p-8 border-b border-white/5 flex justify-between items-center bg-[#1A1A1A] relative z-10 shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+              <h3 className="text-xl font-bold font-serif tracking-widest text-[#FFF2B2] flex items-center gap-3 drop-shadow-sm uppercase">
+                <ShoppingCart size={22} className="text-[#D4AF37]" /> Shopping Cart
               </h3>
-              <button onClick={() => setIsCartOpen(false)} className="text-text-dim hover:text-white bg-dark-4 p-1.5 rounded-lg transition-colors">
-                <X size={18} />
+              <button onClick={() => setIsCartOpen(false)} className="text-[#E0E0E0] hover:text-white bg-white/5 hover:bg-[#D4AF37]/10 p-2 rounded-xl transition-all border border-transparent hover:border-[#D4AF37]/30">
+                <X size={20} />
               </button>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-5 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 custom-scrollbar relative z-10 space-y-4">
               {cartItems.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-text-dim space-y-4">
-                  <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center">
-                    <ShoppingCart size={32} className="opacity-50" />
+                <div className="h-full flex flex-col items-center justify-center text-white/40 space-y-5">
+                  <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center border border-white/5 shadow-inner">
+                    <ShoppingCart size={36} className="opacity-40 text-[#D4AF37]" />
                   </div>
-                  <p className="font-semibold">السلة فارغة حالياً</p>
+                  <p className="font-semibold font-sans tracking-wide">Your cart is currently empty.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {cartItems.map((cartItem, idx) => (
-                    <div key={idx} className="flex gap-4 p-3 bg-dark-3 rounded-2xl border border-white/5">
-                      <div className="w-20 h-20 bg-dark-4 rounded-xl overflow-hidden shrink-0">
+                    <div key={idx} className="flex gap-5 p-4 bg-[#1A1A1A] rounded-2xl border border-white/5 hover:border-[#D4AF37]/20 hover:bg-[#1C1C1C] transition-all shadow-[0_4px_15px_rgba(0,0,0,0.2)] group hover:-translate-y-0.5">
+                      <div className="w-[85px] h-[85px] bg-[#121212] rounded-xl overflow-hidden shrink-0 border border-white/5 shadow-inner relative">
                         {cartItem.item.images?.[0] ? (
-                          <img src={cartItem.item.images[0]} className="w-full h-full object-cover" alt={cartItem.item.name} />
+                          <img src={cartItem.item.images[0]} className="w-full h-full object-cover mix-blend-lighten group-hover:mix-blend-normal transition-all" alt={cartItem.item.name} />
                         ) : (
-                          <Armchair size={24} className="m-auto mt-6 text-white/20" />
+                          <Armchair size={28} className="m-auto mt-8 text-white/20" />
                         )}
                       </div>
                       <div className="flex flex-col justify-between py-1 min-w-0 pr-1 flex-1">
                         <div>
-                          <div className="text-sm font-bold text-white truncate">{cartItem.item.name}</div>
-                          <div className="text-xs text-gold font-bold mt-1">
+                          <div className="text-[17px] font-bold text-white truncate font-sans tracking-wide drop-shadow-sm">{cartItem.item.name}</div>
+                          <div className="text-[14px] text-[#D4AF37] font-bold mt-1 font-inter tracking-wider">
                             {cartItem.item.price ? cartItem.item.price.replace(/السعر\s*[:\-]*\s*/g, '').trim() : 'السعر غير محدد'}
                           </div>
                         </div>
-                        <div className="flex items-center justify-between mt-2">
-                          <div className="flex items-center gap-2 bg-dark-4 rounded-lg p-1 border border-white/5">
+                        <div className="flex items-center justify-between mt-3">
+                          <div className="flex items-center gap-1.5 bg-[#121212] rounded-lg p-1 border border-white/5 shadow-sm">
                             <button 
                               onClick={() => handleAddToCart(cartItem.item, true)}
-                              className="w-6 h-6 rounded flex items-center justify-center bg-white/5 hover:bg-gold hover:text-dark-1 transition-colors text-white"
+                              className="w-7 h-7 rounded-md flex items-center justify-center bg-white/5 hover:bg-[#D4AF37] hover:text-[#121212] transition-colors text-white font-bold"
                             >
                               +
                             </button>
-                            <span className="text-xs font-bold text-white px-1 pt-0.5">{cartItem.quantity}</span>
+                            <span className="text-[13px] font-bold text-white px-2 pt-0.5 min-w-[24px] text-center font-inter">{cartItem.quantity}</span>
                             <button 
                               onClick={() => handleAddToCart(cartItem.item, false)}
-                              className="w-6 h-6 rounded flex items-center justify-center bg-white/5 hover:bg-red-500 hover:text-white transition-colors text-white"
+                              className="w-7 h-7 rounded-md flex items-center justify-center bg-white/5 hover:bg-white/20 hover:text-white transition-colors text-white font-bold"
                             >
                               -
                             </button>
                           </div>
                           <button 
                             onClick={() => handleRemoveFromCart(cartItem.item.id)}
-                            className="text-[10px] text-red-400 hover:text-red-300 px-2 py-1 bg-red-500/10 rounded-lg transition-colors"
+                            className="text-[11px] text-red-400 hover:text-white px-3 py-1.5 bg-red-500/10 hover:bg-red-500/80 rounded-lg transition-colors font-bold tracking-wide"
                           >
-                            إزالة
+                            Remove
                           </button>
                         </div>
                       </div>
@@ -635,16 +634,16 @@ export default function Catalog() {
             </div>
 
             {cartItems.length > 0 && (
-              <div className="p-5 border-t border-white/10 bg-dark-3/50">
+              <div className="p-6 md:p-8 border-t border-white/5 bg-[#1A1A1A] relative z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
                 <button
                   onClick={() => {
                     const message = encodeURIComponent(`السلام عليكم، أحتاج للاستفسار أو حجز هذه المنتجات من الموقع:\n\n${cartItems.map((c, i) => `${i+1}- ${c.item.name} (الكمية: ${c.quantity})`).join('\n')}`);
                     const number = siteSettings.whatsappNumbers?.[0]?.number || '201090902911';
                     window.open(`https://wa.me/${number}?text=${message}`, '_blank');
                   }}
-                  className="w-full bg-[#25D366] text-white font-extrabold py-3.5 rounded-xl flex items-center justify-center gap-2 hover:bg-[#20bd5a] transition-all shadow-[0_4px_20px_rgba(37,211,102,0.3)]"
+                  className="w-full bg-gradient-to-r from-[#20bd5a] to-[#25D366] text-white font-black py-4 rounded-xl flex items-center justify-center gap-3 hover:brightness-110 transition-all shadow-[0_8px_25px_rgba(37,211,102,0.4)] hover:-translate-y-1 tracking-wider text-[15px]"
                 >
-                  <MessageCircle size={20} /> متابعة عبر واتساب
+                  <MessageCircle size={22} /> CHECKOUT VIA WHATSAPP
                 </button>
               </div>
             )}
